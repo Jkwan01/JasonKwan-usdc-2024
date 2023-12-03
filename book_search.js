@@ -18,6 +18,9 @@
  * @param {JSON} scannedTextObj - A JSON object representing the scanned text.
  * @returns {JSON} - Search results.
  * */ 
+
+
+
  function findSearchTermInBooks(searchTerm, scannedTextObj) {
     /** You will need to implement your search and 
      * return the appropriate object here. */
@@ -26,6 +29,20 @@
         "SearchTerm": "",
         "Results": []
     };
+
+    result.SearchTerm = searchTerm; //SearchTerm is always added to the result
+
+    scannedTextObj.forEach(book => { //Iterates throughout the whole input JSON
+        book.Content.forEach(section => {
+            if(section.Text.includes(searchTerm)) {
+                result.Results.push({ //Only adds to the output if the text contains the searchTerm
+                        "ISBN" : book.ISBN,
+                        "Page" : section.Page,
+                        "Line" : section.Line
+                });
+            }
+        })
+    })
     
     return result; 
 }
